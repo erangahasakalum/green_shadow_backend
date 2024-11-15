@@ -35,6 +35,7 @@ public class StaffEntity implements SuperEntity {
     private String email;
     @Enumerated(EnumType.STRING)
     private Role role;
+    
 
 
 }
