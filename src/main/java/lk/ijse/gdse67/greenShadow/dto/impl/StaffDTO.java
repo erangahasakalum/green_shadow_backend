@@ -10,7 +10,6 @@ import javax.management.relation.Role;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@ToString
 
 public class StaffDTO implements SuperDTO {
     private String staffId;

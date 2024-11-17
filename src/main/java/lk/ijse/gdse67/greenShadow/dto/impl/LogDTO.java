@@ -9,7 +9,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@ToString
+
 public class LogDTO implements SuperDTO {
     private String logCode;
     private String logDate;

@@ -9,7 +9,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@ToString
+
 public class VehicleDTO implements SuperDTO {
     private String vehicleId;
     private String licensePlate;

@@ -9,7 +9,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@ToString
+
 public class FieldDTO implements SuperDTO {
     private String fieldCode;
     private String fieldName;

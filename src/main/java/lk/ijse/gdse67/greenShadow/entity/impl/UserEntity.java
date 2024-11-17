@@ -12,7 +12,6 @@ import javax.management.relation.Role;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@ToString
 @Entity
 @Table(name = "user")
 public class UserEntity implements SuperEntity {
