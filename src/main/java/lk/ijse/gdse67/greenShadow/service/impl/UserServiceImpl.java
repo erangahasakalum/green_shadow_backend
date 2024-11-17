@@ -10,6 +10,8 @@ import lk.ijse.gdse67.greenShadow.utill.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @Transactional
 public class UserServiceImpl implements UserService {
@@ -28,6 +30,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUser(String id) {
-
+        Optional<UserEntity> exitUser = userDao.findById(id);
+        if (exitUser.isPresent()) {
+            userDao.delete(exitUser.get());
+        }else {
+            throw new DataPersistException("user not found");
+        }
     }
 }

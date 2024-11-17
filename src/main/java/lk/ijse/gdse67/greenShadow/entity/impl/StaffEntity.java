@@ -1,15 +1,12 @@
 package lk.ijse.gdse67.greenShadow.entity.impl;
 
 import jakarta.persistence.*;
+import lk.ijse.gdse67.greenShadow.entity.Gender;
+import lk.ijse.gdse67.greenShadow.entity.Role;
 import lk.ijse.gdse67.greenShadow.entity.SuperEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import javax.management.relation.Role;
-import java.lang.reflect.Field;
-import java.util.List;
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -22,7 +19,7 @@ public class StaffEntity implements SuperEntity {
     private String lastName;
     private String designation;
     @Enumerated(EnumType.STRING)
-    private String gender;
+    private Gender gender;
     private String joinedDate;
     private String dateOfBirth;
     private String addressLine1;
