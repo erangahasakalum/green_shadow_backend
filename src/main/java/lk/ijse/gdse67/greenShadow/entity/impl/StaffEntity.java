@@ -7,6 +7,10 @@ import lk.ijse.gdse67.greenShadow.entity.SuperEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDate;
+import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -14,25 +18,25 @@ import lombok.NoArgsConstructor;
 @Table(name = "staff")
 public class StaffEntity implements SuperEntity {
     @Id
-    private String staffId;
+    private String staffCode;
     private String firstName;
     private String lastName;
-    private String designation;
+    private LocalDate joinedDate;
+    private LocalDate dateOfBirth;
     @Enumerated(EnumType.STRING)
     private Gender gender;
-    private String joinedDate;
-    private String dateOfBirth;
+    private String designation;
     private String addressLine1;
     private String addressLine2;
     private String addressLine3;
     private String addressLine4;
     private String addressLine5;
-    private String phoneNumber;
+    private String contactNo;
     @Column(unique = true)
     private String email;
     @Enumerated(EnumType.STRING)
     private Role role;
-    
-
+    @OneToMany(mappedBy = "staff")
+    private List<VehicleEntity> vehicles;
 
 }

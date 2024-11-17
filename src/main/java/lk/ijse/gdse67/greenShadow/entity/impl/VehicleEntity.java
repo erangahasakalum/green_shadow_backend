@@ -5,7 +5,7 @@ import lk.ijse.gdse67.greenShadow.entity.SuperEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
+
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -14,14 +14,15 @@ import lombok.ToString;
 @Table(name = "vehicle")
 public class VehicleEntity implements SuperEntity {
     @Id
-    private String vehicleId;
+    private String vehicleCode;
     private String licensePlate;
+    private String name;
     private String category;
     private String fuelType;
     private String status;
     private String remarks;
-    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    @JoinColumn(name = "memberCode")
+    @ManyToOne
+    @JoinColumn(name = "staffCode")
     private StaffEntity staff;
 
 }
