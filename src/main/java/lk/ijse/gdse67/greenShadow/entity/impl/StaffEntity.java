@@ -1,5 +1,6 @@
 package lk.ijse.gdse67.greenShadow.entity.impl;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lk.ijse.gdse67.greenShadow.entity.Gender;
 import lk.ijse.gdse67.greenShadow.entity.Role;
@@ -36,7 +37,11 @@ public class StaffEntity implements SuperEntity {
     private String email;
     @Enumerated(EnumType.STRING)
     private Role role;
+
     @OneToMany(mappedBy = "staff")
     private List<VehicleEntity> vehicles;
+
+
+
 
 }

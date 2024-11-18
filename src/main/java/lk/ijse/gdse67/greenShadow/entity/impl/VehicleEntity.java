@@ -1,5 +1,6 @@
 package lk.ijse.gdse67.greenShadow.entity.impl;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lk.ijse.gdse67.greenShadow.entity.SuperEntity;
 import lombok.AllArgsConstructor;
@@ -24,5 +25,7 @@ public class VehicleEntity implements SuperEntity {
     @ManyToOne
     @JoinColumn(name = "staffCode")
     private StaffEntity staff;
+
+
 
 }

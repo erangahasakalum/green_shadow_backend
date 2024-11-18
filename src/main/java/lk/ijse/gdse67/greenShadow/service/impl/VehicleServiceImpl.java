@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+
 @Service
 @Transactional
 public class VehicleServiceImpl implements VehicleService {
@@ -30,12 +32,27 @@ public class VehicleServiceImpl implements VehicleService {
 
     @Override
     public void updateVehicle(VehicleDTO vehicleDTO, String id) {
-
+        if (vehicleDao.existsById(id)){
+            Optional<VehicleEntity> referenceById = vehicleDao.findById(id);
+            referenceById.get().setLicensePlate(vehicleDTO.getLicensePlate());
+            referenceById.get().setName(vehicleDTO.getName());
+            referenceById.get().setCategory(vehicleDTO.getCategory());
+            referenceById.get().setFuelType(vehicleDTO.getFuelType());
+            referenceById.get().setStatus(vehicleDTO.getStatus());
+            referenceById.get().setRemarks(vehicleDTO.getRemarks());
+        }else {
+            throw new DataPersistException("vehicle not found");
+        }
     }
 
     @Override
     public void deleteVehicle(String id) {
-
+        Optional<VehicleEntity> referenceById = vehicleDao.findById(id);
+        if(referenceById.isPresent()){
+            vehicleDao.deleteById(id);
+        }else {
+            throw new DataPersistException("vehicle not found");
+        }
     }
 
     @Override
