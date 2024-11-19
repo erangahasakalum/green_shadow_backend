@@ -1,6 +1,4 @@
 package lk.ijse.gdse67.greenShadow.entity.impl;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lk.ijse.gdse67.greenShadow.entity.Gender;
 import lk.ijse.gdse67.greenShadow.entity.Role;

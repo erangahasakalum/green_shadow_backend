@@ -31,7 +31,7 @@ public class Mapping {
         return modelMapper.map(vehicleEntity, VehicleDTO.class);
     }
     public List<VehicleDTO> toVehicleDtoList(List<VehicleEntity> list){
-        return modelMapper.map(list,new TypeToken<List<UserDTO>>(){}.getType());
+        return modelMapper.map(list,new TypeToken<List<VehicleDTO>>(){}.getType());
     }
 
     //for staff mapping
