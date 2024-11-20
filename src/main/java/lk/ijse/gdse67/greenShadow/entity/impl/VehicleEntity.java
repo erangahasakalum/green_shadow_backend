@@ -24,6 +24,4 @@ public class VehicleEntity implements SuperEntity {
     @JoinColumn(name = "vehicles")
     private StaffEntity staff;
 
-
-
 }

@@ -38,6 +38,12 @@ public class StaffEntity implements SuperEntity {
 
     @OneToMany(mappedBy = "staff")
     private List<VehicleEntity> vehicles;
+    @ManyToMany
+    private List<FieldEntity> fields;
+    @ManyToMany
+    private List<EquipmentEntity> equipments;
+    @ManyToMany
+    private  List<LogEntity> logs;
 
 
 
