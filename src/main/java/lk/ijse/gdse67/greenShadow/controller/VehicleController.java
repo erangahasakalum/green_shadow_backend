@@ -62,13 +62,6 @@ public class VehicleController {
         return vehicleService.getAllVehicles();
     }
 
-    @GetMapping(value = "/{vehicleCode}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public VehicleStatus getSelectedVehicle(@PathVariable("vehicleCode") String vehicleCode) {
-        if (vehicleCode.isEmpty()) {
-            return new SelectedVehicleStatusCodes(1, "vehicleCode is Empty");
-        } else {
-            return vehicleService.getSelectedVehicle(vehicleCode);
-        }
-    }
+
 
 }
