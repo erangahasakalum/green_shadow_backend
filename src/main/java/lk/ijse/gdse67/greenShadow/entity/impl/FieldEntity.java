@@ -1,5 +1,6 @@
 package lk.ijse.gdse67.greenShadow.entity.impl;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lk.ijse.gdse67.greenShadow.entity.SuperEntity;
 import lombok.AllArgsConstructor;
@@ -15,17 +16,31 @@ import java.util.List;
 @Table(name ="field" )
 public class FieldEntity implements SuperEntity {
     @Id
-    private String fieldCode;
-    private String fieldName;
-    private String fieldLocation;
-    private String extendSize;
-    private String fieldImage1;
-    private String fieldImage2;
+    private String logCode;
+    private String date;
+    private String logDetails;
+    @Column(columnDefinition = "LONGTEXT")
+    private String observedImage;
     @ManyToMany
-    private List<LogEntity> logs;
+    @JoinTable(
+            name = "staff_log_details",
+            joinColumns = @JoinColumn(name = "logCode"),
+            inverseJoinColumns = @JoinColumn(name = "memberCode")
+    )
+    private List<StaffEntity> staffList;
     @ManyToMany
-    private List<EquipmentEntity> equipments;
+    @JoinTable(
+            name = "log_crop_details",
+            joinColumns = @JoinColumn(name = "logCode"),
+            inverseJoinColumns = @JoinColumn(name = "cropCode")
+    )
+    private List<CropEntity> cropList;
     @ManyToMany
-    private List<CropEntity> crops;
-
+    @JoinTable(
+            name = "field_log_details",
+            joinColumns = @JoinColumn(name = "logCode"),
+            inverseJoinColumns = @JoinColumn(name = "fieldCode")
+    )
+    private List<FieldEntity> fieldList;
 }
+

@@ -62,6 +62,4 @@ public class VehicleController {
         return vehicleService.getAllVehicles();
     }
 
-
-
 }

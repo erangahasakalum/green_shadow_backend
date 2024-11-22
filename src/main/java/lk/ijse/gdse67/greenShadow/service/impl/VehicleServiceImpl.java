@@ -1,8 +1,6 @@
 package lk.ijse.gdse67.greenShadow.service.impl;
-
 import jakarta.transaction.Transactional;
 import lk.ijse.gdse67.greenShadow.dao.VehicleDao;
-import lk.ijse.gdse67.greenShadow.dto.VehicleStatus;
 import lk.ijse.gdse67.greenShadow.dto.impl.VehicleDTO;
 import lk.ijse.gdse67.greenShadow.entity.impl.VehicleEntity;
 import lk.ijse.gdse67.greenShadow.exeption.DataPersistException;
