@@ -22,6 +22,13 @@ public class VehicleServiceImpl implements VehicleService {
     private Mapping vehicleMapping;
     @Override
     public void saveVehicle(VehicleDTO vehicleDTO) {
+        int id = 0;
+        VehicleEntity lastId = vehicleDao.findLastRowNative();
+        if (lastId != null) {
+            String[] split = lastId.getVehicleCode().split("-");
+            id = Integer.parseInt(split[0]);
+        }
+        vehicleDTO.setVehicleCode("VEHICLE -" + ++id);
         VehicleEntity save = vehicleDao.save(vehicleMapping.toVehicleEntity(vehicleDTO));
         if (save ==null){
             throw new DataPersistException("vehicle not saved");
