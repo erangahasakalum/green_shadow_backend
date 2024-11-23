@@ -16,31 +16,32 @@ import java.util.List;
 @Table(name ="field" )
 public class FieldEntity implements SuperEntity {
     @Id
-    private String logCode;
-    private String date;
-    private String logDetails;
+    private String fieldCode;
+    private String name;
+    private String location;
+    private double extentSize;
     @Column(columnDefinition = "LONGTEXT")
-    private String observedImage;
+    private String fieldImage1;
+    @Column(columnDefinition = "LONGTEXT")
+    private String fieldImage2;
+    @JsonIgnore  // Ignore during serialization to avoid recursion
+    @ManyToMany(mappedBy = "fieldList")
+    private List<EquipmentEntity> equipmentsList;
     @ManyToMany
     @JoinTable(
-            name = "staff_log_details",
-            joinColumns = @JoinColumn(name = "logCode"),
+            name = "field_staff_details",
+            joinColumns = @JoinColumn(name = "fieldCode"),
             inverseJoinColumns = @JoinColumn(name = "memberCode")
     )
     private List<StaffEntity> staffList;
+    @ManyToMany(mappedBy = "fieldList")
+    private List<LogEntity> logList;
     @ManyToMany
     @JoinTable(
-            name = "log_crop_details",
-            joinColumns = @JoinColumn(name = "logCode"),
+            name = "field_crop_details",
+            joinColumns = @JoinColumn(name = "fieldCode"),
             inverseJoinColumns = @JoinColumn(name = "cropCode")
     )
     private List<CropEntity> cropList;
-    @ManyToMany
-    @JoinTable(
-            name = "field_log_details",
-            joinColumns = @JoinColumn(name = "logCode"),
-            inverseJoinColumns = @JoinColumn(name = "fieldCode")
-    )
-    private List<FieldEntity> fieldList;
 }
 

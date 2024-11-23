@@ -1,9 +1,6 @@
 package lk.ijse.gdse67.greenShadow.entity.impl;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lk.ijse.gdse67.greenShadow.entity.SuperEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,16 +15,19 @@ import java.util.List;
 @Table(name = "equipment")
 public class EquipmentEntity implements SuperEntity {
     @Id
-    private String equipmentId;
-    private String equipmentName;
-    private String equipmentType;
+    private String equipmentCode;
+    private String Name;
+    private String type;
     private String status;
-    private String availableCount;
-
+    private int availableCount;
+  /*  @OneToMany(mappedBy = "equipmentEntity")
+    private List<StaffEquipmentDetailsEntity> staffEquipmentDetailsList;*/
     @ManyToMany
-    private List<StaffEntity> staff;
-    @ManyToMany
-    private List<FieldEntity> field;
-
+    @JoinTable(
+            name = "equipment_field_details",
+            joinColumns = @JoinColumn(name = "equipmentCode"),
+            inverseJoinColumns = @JoinColumn(name = "fieldCode")
+    )
+    private List<FieldEntity> fieldList;
 
 }

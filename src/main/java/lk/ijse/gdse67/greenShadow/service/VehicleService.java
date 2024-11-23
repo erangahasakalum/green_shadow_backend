@@ -1,6 +1,4 @@
 package lk.ijse.gdse67.greenShadow.service;
-
-import lk.ijse.gdse67.greenShadow.dto.VehicleStatus;
 import lk.ijse.gdse67.greenShadow.dto.impl.VehicleDTO;
 
 import java.util.List;
