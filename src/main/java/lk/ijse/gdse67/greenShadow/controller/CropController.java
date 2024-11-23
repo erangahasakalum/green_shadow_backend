@@ -4,6 +4,7 @@ import lk.ijse.gdse67.greenShadow.dao.CropDao;
 import lk.ijse.gdse67.greenShadow.dto.impl.CropDTO;
 import lk.ijse.gdse67.greenShadow.entity.impl.CropEntity;
 import lk.ijse.gdse67.greenShadow.exeption.DataPersistException;
+import lk.ijse.gdse67.greenShadow.exeption.NotFoundException;
 import lk.ijse.gdse67.greenShadow.service.CropService;
 import lk.ijse.gdse67.greenShadow.service.impl.CropServiceImpl;
 import lk.ijse.gdse67.greenShadow.utill.AppUtil;
@@ -13,8 +14,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -59,9 +58,16 @@ public class CropController {
         }
     }
 
-    @DeleteMapping
-    public ResponseEntity<Void> deleteCrop() {
-        return null;
+    @DeleteMapping(value = "/{cropCode}")
+    public ResponseEntity<Void> deleteCrop(@PathVariable ("cropCode")String cropCode) {
+        try {
+            cropService.deleteCrop(cropCode);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (NotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @GetMapping

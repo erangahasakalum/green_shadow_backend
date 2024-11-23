@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -48,7 +49,12 @@ public class CropServiceImpl implements CropService {
 
     @Override
     public void deleteCrop(String id) {
-
+        Optional<CropEntity> referenceById = cropDao.findById(id);
+        if (referenceById.isPresent()) {
+            cropDao.deleteById(id);
+        }else {
+            throw new DataPersistException("crop not deleted");
+        }
     }
 
     @Override
