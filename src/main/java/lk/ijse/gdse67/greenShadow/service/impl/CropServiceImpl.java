@@ -33,7 +33,7 @@ public class CropServiceImpl implements CropService {
             String[] split = lastRowNative.getCropCode().split("-");
             id = Integer.parseInt(split[1]);
         }
-        cropDTO.setCropId("CROP -"+ ++id);
+        cropDTO.setCropCode("CROP -"+ ++id);
         System.out.println(cropDTO);
         CropEntity saved = cropDao.save(cropMapping.toCropEntity(cropDTO));
         System.out.println(saved);

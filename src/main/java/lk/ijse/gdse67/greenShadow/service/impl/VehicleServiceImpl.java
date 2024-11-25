@@ -39,12 +39,12 @@ public class VehicleServiceImpl implements VehicleService {
     public void updateVehicle(VehicleDTO vehicleDTO, String id) {
         if (vehicleDao.existsById(id)){
             Optional<VehicleEntity> referenceById = vehicleDao.findById(id);
-            referenceById.get().setLicensePlate(vehicleDTO.getLicensePlate());
+            referenceById.get().setLicensePlateNumber(vehicleDTO.getLicensePlateNumber());
             referenceById.get().setName(vehicleDTO.getName());
             referenceById.get().setCategory(vehicleDTO.getCategory());
             referenceById.get().setFuelType(vehicleDTO.getFuelType());
             referenceById.get().setStatus(vehicleDTO.getStatus());
-            referenceById.get().setRemarks(vehicleDTO.getRemarks());
+            referenceById.get().setRemark(vehicleDTO.getRemark());
         }else {
             throw new DataPersistException("vehicle not found");
         }
