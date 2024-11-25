@@ -1,4 +1,5 @@
 package lk.ijse.gdse67.greenShadow.service.impl;
+
 import jakarta.transaction.Transactional;
 import lk.ijse.gdse67.greenShadow.dao.VehicleDao;
 import lk.ijse.gdse67.greenShadow.dto.impl.VehicleDTO;
@@ -20,24 +21,29 @@ public class VehicleServiceImpl implements VehicleService {
 
     @Autowired
     private Mapping vehicleMapping;
+
     @Override
     public void saveVehicle(VehicleDTO vehicleDTO) {
         int id = 0;
         VehicleEntity lastId = vehicleDao.findLastRowNative();
         if (lastId != null) {
-            String[] split = lastId.getVehicleCode().split("-");
-            id = Integer.parseInt(split[0]);
+            try {
+                String[] split = lastId.getVehicleCode().split("-");
+                id = Integer.parseInt(split[0]);
+            } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+                throw new IllegalArgumentException("Invalid vehicle code");
+            }
         }
         vehicleDTO.setVehicleCode("VEHICLE -" + ++id);
         VehicleEntity save = vehicleDao.save(vehicleMapping.toVehicleEntity(vehicleDTO));
-        if (save ==null){
+        if (save == null) {
             throw new DataPersistException("vehicle not saved");
         }
     }
 
     @Override
     public void updateVehicle(VehicleDTO vehicleDTO, String id) {
-        if (vehicleDao.existsById(id)){
+        if (vehicleDao.existsById(id)) {
             Optional<VehicleEntity> referenceById = vehicleDao.findById(id);
             referenceById.get().setLicensePlateNumber(vehicleDTO.getLicensePlateNumber());
             referenceById.get().setName(vehicleDTO.getName());
@@ -45,7 +51,7 @@ public class VehicleServiceImpl implements VehicleService {
             referenceById.get().setFuelType(vehicleDTO.getFuelType());
             referenceById.get().setStatus(vehicleDTO.getStatus());
             referenceById.get().setRemark(vehicleDTO.getRemark());
-        }else {
+        } else {
             throw new DataPersistException("vehicle not found");
         }
     }
@@ -53,9 +59,9 @@ public class VehicleServiceImpl implements VehicleService {
     @Override
     public void deleteVehicle(String id) {
         Optional<VehicleEntity> referenceById = vehicleDao.findById(id);
-        if(referenceById.isPresent()){
+        if (referenceById.isPresent()) {
             vehicleDao.deleteById(id);
-        }else {
+        } else {
             throw new DataPersistException("vehicle not found");
         }
     }
