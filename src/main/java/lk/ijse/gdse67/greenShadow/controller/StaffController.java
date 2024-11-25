@@ -19,9 +19,9 @@ public class StaffController {
     @Autowired
     private StaffService staffService;
 
-
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> saveStaff(@RequestBody StaffDTO staffDTO) {
+    public ResponseEntity<Void> saveStaff(@RequestBody () StaffDTO staffDTO) {
+        System.out.println(staffDTO.toString());
         try {
             staffService.saveStaff(staffDTO);
             return new ResponseEntity<>(HttpStatus.CREATED);
