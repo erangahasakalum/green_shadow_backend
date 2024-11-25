@@ -5,16 +5,24 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.springframework.data.annotation.Id;
+
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 
 public class CropDTO implements SuperDTO {
-    private String cropId;
+    @Id
+    private String cropCode;
     private String cropName;
     private String scientificName;
-    private String image;
     private String category;
-    private String cropSeason;
+    private String season;
+    private String cropImage;
+    private List<String> logCodeList;
+    private List<String> fieldCodeList;
+
+
 }

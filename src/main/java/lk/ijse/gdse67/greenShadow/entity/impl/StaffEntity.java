@@ -17,7 +17,7 @@ import java.util.List;
 @Table(name = "staff")
 public class StaffEntity implements SuperEntity {
     @Id
-    private String staffCode;
+    private String memberCode;
     private String firstName;
     private String lastName;
     private LocalDate joinedDate;
@@ -35,16 +35,14 @@ public class StaffEntity implements SuperEntity {
     private String email;
     @Enumerated(EnumType.STRING)
     private Role role;
-
     @OneToMany(mappedBy = "staff")
-    private List<VehicleEntity> vehicles;
-    @ManyToMany
-    private List<FieldEntity> fields;
-    @ManyToMany
-    private List<EquipmentEntity> equipments;
-    @ManyToMany
-    private  List<LogEntity> logs;
-
+    private List<VehicleEntity> vehicleList;
+    @ManyToMany(mappedBy = "staffList")
+    private List<FieldEntity> fieldList;
+    @ManyToMany(mappedBy = "staffList")
+    private List<LogEntity> logList;
+    @ManyToMany(mappedBy = "staffCodeList")
+    private List<EquipmentEntity> equipmentList;
 
 
 

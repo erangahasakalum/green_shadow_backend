@@ -33,7 +33,9 @@ public class CropController {
             @RequestPart("scientificName") String scientificName,
             @RequestPart("image") MultipartFile cropImage,
             @RequestPart("category") String category,
-            @RequestPart("cropSeason") String cropSeason
+            @RequestPart("cropSeason") String cropSeason,
+            @RequestPart("fieldList") List<String> fieldList,
+            @RequestPart("logList") List<String> logList
     ) {
 
         System.out.println(cropName + scientificName + cropSeason + category);
@@ -44,10 +46,11 @@ public class CropController {
             var cropDTO = new CropDTO();
             cropDTO.setCropName(cropName);
             cropDTO.setScientificName(scientificName);
-            cropDTO.setImage(base64CropPic);
             cropDTO.setCategory(category);
-            cropDTO.setCropSeason(cropSeason);
-            System.out.println(cropDTO);
+            cropDTO.setSeason(cropSeason);
+            cropDTO.setCropImage(base64CropPic);
+            cropDTO.setFieldCodeList(fieldList);
+            cropDTO.setLogCodeList(logList);
             cropService.saveCrops(cropDTO);
             return new ResponseEntity<>(HttpStatus.CREATED);
 

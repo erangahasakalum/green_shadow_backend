@@ -12,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name = "log")
+@Table(name = "logs")
 public class LogEntity implements SuperEntity {
     @Id
     private String logCode;
@@ -41,6 +41,5 @@ public class LogEntity implements SuperEntity {
             inverseJoinColumns = @JoinColumn(name = "fieldCode")
     )
     private List<FieldEntity> fieldList;
-
 
 }

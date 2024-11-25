@@ -4,18 +4,21 @@ import lk.ijse.gdse67.greenShadow.dto.VehicleStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 public class VehicleDTO implements VehicleStatus {
+    @Id
     private String vehicleCode;
-    private String licensePlate;
+    private String licensePlateNumber;
     private String name;
     private String category;
     private String fuelType;
     private String status;
-    private String remarks;
-    private String staffCode;
+    private String remark;
+    private String memberCode;
+
 
 }
