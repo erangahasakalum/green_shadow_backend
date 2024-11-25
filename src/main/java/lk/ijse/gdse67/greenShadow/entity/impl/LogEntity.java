@@ -1,5 +1,4 @@
 package lk.ijse.gdse67.greenShadow.entity.impl;
-
 import jakarta.persistence.*;
 import lk.ijse.gdse67.greenShadow.entity.SuperEntity;
 import lombok.AllArgsConstructor;

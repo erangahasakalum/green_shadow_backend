@@ -11,7 +11,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-
 public class StaffDTO implements SuperDTO {
     @Id
     private String memberCode;

@@ -1,9 +1,7 @@
 package lk.ijse.gdse67.greenShadow.service.impl;
-
 import lk.ijse.gdse67.greenShadow.dao.EquipmentDao;
 import lk.ijse.gdse67.greenShadow.dto.impl.EquipmentDTO;
 import lk.ijse.gdse67.greenShadow.entity.impl.EquipmentEntity;
-import lk.ijse.gdse67.greenShadow.entity.impl.VehicleEntity;
 import lk.ijse.gdse67.greenShadow.exeption.DataPersistException;
 import lk.ijse.gdse67.greenShadow.service.EquipmentService;
 import lk.ijse.gdse67.greenShadow.utill.Mapping;

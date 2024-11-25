@@ -1,10 +1,8 @@
 package lk.ijse.gdse67.greenShadow.dto.impl;
-
 import lk.ijse.gdse67.greenShadow.dto.SuperDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 import org.springframework.data.annotation.Id;
 
 import java.util.List;
@@ -12,7 +10,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-
 public class FieldDTO implements SuperDTO {
     @Id
     private String fieldCode;

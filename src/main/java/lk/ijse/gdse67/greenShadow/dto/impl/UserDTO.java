@@ -1,5 +1,4 @@
 package lk.ijse.gdse67.greenShadow.dto.impl;
-import lk.ijse.gdse67.greenShadow.dto.SuperDTO;
 import lk.ijse.gdse67.greenShadow.dto.UserStatus;
 import lk.ijse.gdse67.greenShadow.entity.Role;
 import lombok.AllArgsConstructor;

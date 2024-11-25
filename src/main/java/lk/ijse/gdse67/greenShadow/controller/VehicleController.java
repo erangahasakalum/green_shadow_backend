@@ -1,6 +1,4 @@
 package lk.ijse.gdse67.greenShadow.controller;
-import lk.ijse.gdse67.greenShadow.customerStatusCodes.SelectedVehicleStatusCodes;
-import lk.ijse.gdse67.greenShadow.dto.VehicleStatus;
 import lk.ijse.gdse67.greenShadow.dto.impl.VehicleDTO;
 import lk.ijse.gdse67.greenShadow.exeption.DataPersistException;
 import lk.ijse.gdse67.greenShadow.exeption.NotFoundException;

@@ -1,9 +1,7 @@
 package lk.ijse.gdse67.greenShadow.service.impl;
-
 import jakarta.transaction.Transactional;
 import lk.ijse.gdse67.greenShadow.dao.UserDao;
 import lk.ijse.gdse67.greenShadow.dto.impl.UserDTO;
-import lk.ijse.gdse67.greenShadow.entity.Role;
 import lk.ijse.gdse67.greenShadow.entity.impl.UserEntity;
 import lk.ijse.gdse67.greenShadow.exeption.DataPersistException;
 import lk.ijse.gdse67.greenShadow.exeption.NotFoundException;

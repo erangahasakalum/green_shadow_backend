@@ -2,14 +2,12 @@ package lk.ijse.gdse67.greenShadow.service.impl;
 import jakarta.transaction.Transactional;
 import lk.ijse.gdse67.greenShadow.dao.StaffDao;
 import lk.ijse.gdse67.greenShadow.dto.impl.StaffDTO;
-import lk.ijse.gdse67.greenShadow.entity.impl.EquipmentEntity;
 import lk.ijse.gdse67.greenShadow.entity.impl.StaffEntity;
 import lk.ijse.gdse67.greenShadow.exeption.DataPersistException;
 import lk.ijse.gdse67.greenShadow.service.StaffService;
 import lk.ijse.gdse67.greenShadow.utill.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Transactional
