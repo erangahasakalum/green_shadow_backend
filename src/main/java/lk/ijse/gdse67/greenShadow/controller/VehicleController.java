@@ -22,7 +22,6 @@ public class VehicleController {
     public ResponseEntity<Void> saveVehicle(@RequestBody VehicleDTO vehicleDTO) {
         System.out.println(vehicleDTO);
         try {
-            vehicleService.saveVehicle(vehicleDTO);
             return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (DataPersistException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

@@ -16,12 +16,14 @@ public class EquipmentController {
     @Autowired
     private EquipmentService equipmentService;
 
-    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> saveEquipment(EquipmentDTO equipmentDTO){
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Void> saveEquipment(@RequestBody EquipmentDTO equipmentDTO){
+        System.out.println(equipmentDTO+"equipmentDTOController");
         try {
             equipmentService.saveEquipment(equipmentDTO);
             return new ResponseEntity<>(HttpStatus.CREATED);
         }catch (DataPersistException e){
+            e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }catch (Exception e){
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
