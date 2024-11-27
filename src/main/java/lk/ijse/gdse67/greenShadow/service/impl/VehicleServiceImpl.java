@@ -2,6 +2,7 @@ package lk.ijse.gdse67.greenShadow.service.impl;
 import jakarta.transaction.Transactional;
 import lk.ijse.gdse67.greenShadow.dao.VehicleDao;
 import lk.ijse.gdse67.greenShadow.dto.impl.VehicleDTO;
+import lk.ijse.gdse67.greenShadow.entity.impl.CropEntity;
 import lk.ijse.gdse67.greenShadow.entity.impl.VehicleEntity;
 import lk.ijse.gdse67.greenShadow.exeption.DataPersistException;
 import lk.ijse.gdse67.greenShadow.service.VehicleService;
@@ -24,16 +25,16 @@ public class VehicleServiceImpl implements VehicleService {
     @Override
     public void saveVehicle(VehicleDTO vehicleDTO) {
         int id = 0;
-        VehicleEntity lastId = vehicleDao.findLastRowNative();
-        if (lastId != null) {
+        VehicleEntity lastRowNative = vehicleDao.findLastRowNative();
+        if (lastRowNative != null){
             try {
-                String[] split = lastId.getVehicleCode().split("-");
-                id = Integer.parseInt(split[0]);
-            } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
-                throw new IllegalArgumentException("Invalid vehicle code");
+                String[] parts = lastRowNative.getVehicleCode().split("-");
+                id = Integer.parseInt(parts[1]);
+            }catch (Exception e){
+                throw new DataPersistException(e.getMessage());
             }
         }
-        vehicleDTO.setVehicleCode("VEHICLE -" + ++id);
+        vehicleDTO.setVehicleCode("VEHICLE-" + ++id);
         VehicleEntity save = vehicleDao.save(vehicleMapping.toVehicleEntity(vehicleDTO));
         if (save == null) {
             throw new DataPersistException("vehicle not saved");

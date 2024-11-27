@@ -4,12 +4,15 @@ import lk.ijse.gdse67.greenShadow.exeption.DataPersistException;
 import lk.ijse.gdse67.greenShadow.exeption.NotFoundException;
 import lk.ijse.gdse67.greenShadow.service.FieldService;
 import lk.ijse.gdse67.greenShadow.utill.AppUtil;
+import lk.ijse.gdse67.greenShadow.utill.SplitString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -19,16 +22,25 @@ public class FieldController {
     @Autowired
     private FieldService fieldService;
 
-    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Void> saveCrop(
             @RequestPart("name") String fieldName,
             @RequestPart("location") String location,
             @RequestPart("extentSize") String extentSize,
             @RequestPart("fieldImage1") MultipartFile fieldImage1,
             @RequestPart("fieldImage2") MultipartFile fieldImage2,
-            @RequestPart("staffList") List<String> staffList,
-            @RequestPart("cropList") List<String> cropList
+            @RequestPart(value = "staffList",required = false) String staffList,
+            @RequestPart(value = "cropList",required = false) String cropList
     ) {
+
+        List<String> staff_codes = new ArrayList<>();
+        List<String> crop_codes = new ArrayList<>();
+        if (staffList != null) {
+            staff_codes = SplitString.spiltLists(staffList);
+        }
+        if (cropList != null) {
+            crop_codes = SplitString.spiltLists(cropList);
+        }
 
         String base64FieldImage1 = "";
         String base64FieldImage2 = "";
@@ -45,8 +57,8 @@ public class FieldController {
             fieldDTO.setExtentSize(Double.parseDouble(extentSize));
             fieldDTO.setFieldImage1(base64FieldImage1);
             fieldDTO.setFieldImage2(base64FieldImage2);
-            fieldDTO.setMemberCodeList(staffList);
-            fieldDTO.setCropCodeList(cropList);
+            fieldDTO.setMemberCodeList(staff_codes);
+            fieldDTO.setCropCodeList(crop_codes);
             fieldService.saveField(fieldDTO);
             return new ResponseEntity<>(HttpStatus.CREATED);
 
