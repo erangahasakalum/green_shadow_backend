@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v1/log")
+@RequestMapping("api/v1/logs")
 public class LogController {
     @Autowired
     private LogService logService;
@@ -26,9 +26,9 @@ public class LogController {
             @RequestPart("date") String date,
             @RequestPart("logDetails") String logDetails,
             @RequestPart("observedImage") MultipartFile observedImage,
-            @RequestPart("staffList") String staffList,
-            @RequestPart("cropList") String cropList,
-            @RequestPart("fieldList") String fieldList
+            @RequestPart(value = "staffList",required = false) String staffList,
+            @RequestPart(value = "cropList",required = false) String cropList,
+            @RequestPart(value = "fieldList",required = false) String fieldList
 
     )  {
         try {
@@ -57,14 +57,15 @@ public class LogController {
             logDTO.setStaffList(staffCodes);
             logDTO.setCropList(cropCodes);
             logDTO.setFieldList(fieldCode);
+            System.out.println(logDTO);
             logService.saveLogs(logDTO);
             return new ResponseEntity<>(HttpStatus.CREATED);
         }catch (DataPersistException e){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }catch (Exception e){
+            e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
 
     }
 
