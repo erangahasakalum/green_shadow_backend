@@ -46,10 +46,10 @@ public class FieldController {
         String base64FieldImage2 = "";
         try {
             byte[] fieldImage1Bytes = fieldImage1.getBytes();
-            base64FieldImage1 = AppUtil.cropImage(fieldImage1Bytes);
+            base64FieldImage1 = AppUtil.imageConvert(fieldImage1Bytes);
 
             byte[] fieldImage2Bytes1 = fieldImage2.getBytes();
-            base64FieldImage2 = AppUtil.cropImage(fieldImage2Bytes1);
+            base64FieldImage2 = AppUtil.imageConvert(fieldImage2Bytes1);
 
             var fieldDTO = new FieldDTO();
             fieldDTO.setName(fieldName);
@@ -101,10 +101,10 @@ public class FieldController {
         String base64FieldImage2 = "";
         try {
             byte[] fieldImage1Bytes = fieldImage1.getBytes();
-            base64FieldImage1 = AppUtil.cropImage(fieldImage1Bytes);
+            base64FieldImage1 = AppUtil.imageConvert(fieldImage1Bytes);
 
             byte[] fieldImage2Bytes1 = fieldImage2.getBytes();
-            base64FieldImage2 = AppUtil.cropImage(fieldImage2Bytes1);
+            base64FieldImage2 = AppUtil.imageConvert(fieldImage2Bytes1);
 
             var fieldDTO = new FieldDTO();
             fieldDTO.setName(fieldName);

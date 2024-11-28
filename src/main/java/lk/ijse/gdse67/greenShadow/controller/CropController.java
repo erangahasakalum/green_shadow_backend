@@ -44,7 +44,7 @@ public class CropController {
         String base64CropPic = "";
         try {
             byte[] bytesCropImage = cropImage.getBytes();
-            base64CropPic = AppUtil.cropImage(bytesCropImage);
+            base64CropPic = AppUtil.imageConvert(bytesCropImage);
             var cropDTO = new CropDTO();
             cropDTO.setCropName(cropName);
             cropDTO.setScientificName(scientificName);
