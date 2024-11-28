@@ -1,8 +1,11 @@
 package lk.ijse.gdse67.greenShadow.service.impl;
 import jakarta.transaction.Transactional;
+import lk.ijse.gdse67.greenShadow.dao.StaffDao;
 import lk.ijse.gdse67.greenShadow.dao.VehicleDao;
+import lk.ijse.gdse67.greenShadow.dto.impl.StaffDTO;
 import lk.ijse.gdse67.greenShadow.dto.impl.VehicleDTO;
 import lk.ijse.gdse67.greenShadow.entity.impl.CropEntity;
+import lk.ijse.gdse67.greenShadow.entity.impl.StaffEntity;
 import lk.ijse.gdse67.greenShadow.entity.impl.VehicleEntity;
 import lk.ijse.gdse67.greenShadow.exeption.DataPersistException;
 import lk.ijse.gdse67.greenShadow.service.VehicleService;
@@ -22,6 +25,9 @@ public class VehicleServiceImpl implements VehicleService {
     @Autowired
     private Mapping vehicleMapping;
 
+    @Autowired
+    private StaffDao staffDao;
+
     @Override
     public void saveVehicle(VehicleDTO vehicleDTO) {
         int id = 0;
@@ -35,7 +41,12 @@ public class VehicleServiceImpl implements VehicleService {
             }
         }
         vehicleDTO.setVehicleCode("VEHICLE-" + ++id);
-        VehicleEntity save = vehicleDao.save(vehicleMapping.toVehicleEntity(vehicleDTO));
+        VehicleEntity vehicleEntity = vehicleMapping.toVehicleEntity(vehicleDTO);
+        if (staffDao.existsById(vehicleDTO.getMemberCode())){
+            vehicleEntity.setStaff(staffDao.getReferenceById(vehicleDTO.getMemberCode()));
+        }
+        VehicleEntity save = vehicleDao.save(vehicleEntity);
+
         if (save == null) {
             throw new DataPersistException("vehicle not saved");
         }
