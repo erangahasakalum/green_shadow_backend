@@ -55,6 +55,6 @@ public class LogServiceImpl implements LogService {
 
     @Override
     public List<LogDTO> getAllLogs() {
-        return List.of();
+        return logMapping.toLogDtoList(logDao.findAll());
     }
 }

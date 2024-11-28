@@ -81,7 +81,7 @@ public class Mapping {
     }
 
     public List<LogDTO> toLogDtoList(List<LogEntity> list) {
-        return modelMapper.map(list, new TypeToken<List<UserDTO>>() {
+        return modelMapper.map(list, new TypeToken<List<LogDTO>>() {
         }.getType());
     }
 

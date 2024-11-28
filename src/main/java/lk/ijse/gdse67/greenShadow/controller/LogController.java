@@ -69,5 +69,10 @@ public class LogController {
 
     }
 
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<LogDTO> getAllLogs(){
+        return logService.getAllLogs();
+    }
+
 
 }
