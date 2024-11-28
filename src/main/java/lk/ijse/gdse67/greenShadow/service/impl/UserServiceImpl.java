@@ -10,6 +10,7 @@ import lk.ijse.gdse67.greenShadow.utill.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -19,10 +20,10 @@ public class UserServiceImpl implements UserService {
     private UserDao userDao;
 
     @Autowired
-    private Mapping mapping;
+    private Mapping userMapping;
     @Override
     public void saveUser(UserDTO userDTO) {
-        UserEntity save = userDao.save(mapping.toUserEntity(userDTO));
+        UserEntity save = userDao.save(userMapping.toUserEntity(userDTO));
         if (save == null) {
             throw new DataPersistException("user not saved");
         }
@@ -49,6 +50,11 @@ public class UserServiceImpl implements UserService {
             throw new NotFoundException("This Id Not in database!!!");
         }
 
+    }
+
+    @Override
+    public List<UserDTO> getAllUsers() {
+        return userMapping.toUserDtoList(userDao.findAll());
     }
 
 }
