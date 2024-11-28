@@ -68,7 +68,6 @@ public class VehicleServiceImpl implements VehicleService {
 
     @Override
     public List<VehicleDTO> getAllVehicles() {
-        List<VehicleEntity> allVehicles = vehicleDao.findAll();
-        return vehicleMapping.toVehicleDtoList(allVehicles);
+        return vehicleMapping.toVehicleDtoList(vehicleDao.findAll());
     }
 }

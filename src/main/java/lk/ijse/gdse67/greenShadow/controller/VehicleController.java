@@ -20,13 +20,12 @@ public class VehicleController {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> saveVehicle(@RequestBody VehicleDTO vehicleDTO) {
-        System.out.println(vehicleDTO);
         try {
+            vehicleService.saveVehicle(vehicleDTO);
             return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (DataPersistException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
-            e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -43,17 +42,6 @@ public class VehicleController {
         }
     }
 
-    @DeleteMapping(value = "/{vehicleCode}")
-    public ResponseEntity<Void> deleteVehicle(@PathVariable("vehicleCode") String vehicleCode) {
-        try {
-            vehicleService.deleteVehicle(vehicleCode);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } catch (NotFoundException e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<VehicleDTO> getAllVehicles() {
