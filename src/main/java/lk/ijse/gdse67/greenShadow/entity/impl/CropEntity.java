@@ -1,14 +1,14 @@
 package lk.ijse.gdse67.greenShadow.entity.impl;
 import jakarta.persistence.*;
 import lk.ijse.gdse67.greenShadow.entity.SuperEntity;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
 import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "crop")
 public class CropEntity implements SuperEntity {

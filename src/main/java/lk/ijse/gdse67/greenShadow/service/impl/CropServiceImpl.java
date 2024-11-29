@@ -3,8 +3,13 @@ package lk.ijse.gdse67.greenShadow.service.impl;
 import lk.ijse.gdse67.greenShadow.dao.CropDao;
 import lk.ijse.gdse67.greenShadow.dao.FieldDao;
 import lk.ijse.gdse67.greenShadow.dto.impl.CropDTO;
+import lk.ijse.gdse67.greenShadow.dto.impl.FieldDTO;
+import lk.ijse.gdse67.greenShadow.dto.impl.LogDTO;
+import lk.ijse.gdse67.greenShadow.dto.impl.VehicleDTO;
 import lk.ijse.gdse67.greenShadow.entity.impl.CropEntity;
 import lk.ijse.gdse67.greenShadow.entity.impl.FieldEntity;
+import lk.ijse.gdse67.greenShadow.entity.impl.LogEntity;
+import lk.ijse.gdse67.greenShadow.entity.impl.VehicleEntity;
 import lk.ijse.gdse67.greenShadow.exeption.DataPersistException;
 import lk.ijse.gdse67.greenShadow.service.CropService;
 import lk.ijse.gdse67.greenShadow.utill.Mapping;
@@ -65,7 +70,20 @@ public class CropServiceImpl implements CropService {
 
     @Override
     public List<CropDTO> getAllCrops() {
-        return cropMapping.toCropDtoList(cropDao.findAll());
+        List<CropDTO> list =  new ArrayList<>();
+        List<CropEntity> all = cropDao.findAll();
+        for (CropEntity cropEntity : all){
+            List<String> fieldCodes = new ArrayList<>();
+            List<String> logCodes = new ArrayList<>();
+            for (FieldEntity field : cropEntity.getFieldList()){
+                fieldCodes.add(field.getFieldCode());
+            }
+            for (LogEntity logEntity : cropEntity.getLogList()){
+                logCodes.add(logEntity.getLogCode());
+            }
+            list.add(new CropDTO(cropEntity.getCropCode(),cropEntity.getCropName(),cropEntity.getScientificName(),cropEntity.getCropImage(),cropEntity.getCategory(),cropEntity.getSeason(),fieldCodes,logCodes));
+        }
+        return list;
     }
 
     @Override
