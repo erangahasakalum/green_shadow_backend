@@ -23,23 +23,28 @@ public class FieldController {
     private FieldService fieldService;
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Void> saveCrop(
+    public ResponseEntity<Void> saveField(
             @RequestPart("name") String fieldName,
             @RequestPart("location") String location,
             @RequestPart("extentSize") String extentSize,
             @RequestPart("fieldImage1") MultipartFile fieldImage1,
             @RequestPart("fieldImage2") MultipartFile fieldImage2,
             @RequestPart(value = "staffList",required = false) String staffList,
-            @RequestPart(value = "cropList",required = false) String cropList
+            @RequestPart(value = "cropList",required = false) String cropList,
+            @RequestPart(value = "equipmentList",required = false) String equipmentList
     ) {
-
+        System.out.println(equipmentList);
         List<String> staff_codes = new ArrayList<>();
         List<String> crop_codes = new ArrayList<>();
+        List<String> equipment_codes = new ArrayList<>();
         if (staffList != null) {
             staff_codes = SplitString.spiltLists(staffList);
         }
         if (cropList != null) {
             crop_codes = SplitString.spiltLists(cropList);
+        }
+        if (equipmentList != null) {
+            equipment_codes = SplitString.spiltLists(equipmentList);
         }
 
         String base64FieldImage1 = "";
@@ -59,12 +64,14 @@ public class FieldController {
             fieldDTO.setFieldImage2(base64FieldImage2);
             fieldDTO.setMemberCodeList(staff_codes);
             fieldDTO.setCropCodeList(crop_codes);
+            fieldDTO.setEquipmentsList(equipment_codes);
             fieldService.saveField(fieldDTO);
             return new ResponseEntity<>(HttpStatus.CREATED);
 
         } catch (DataPersistException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
+            e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

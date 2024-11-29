@@ -29,6 +29,8 @@ public class FieldServiceImpl implements FieldService {
     private StaffDao staffDao;
     @Autowired
     private CropDao cropDao;
+    @Autowired
+    private EquipmentDao equipmentDao;
 
     @Autowired
     private Mapping fieldMapping;
@@ -62,8 +64,20 @@ public class FieldServiceImpl implements FieldService {
             }
         }
 
+        List<EquipmentEntity> equipmentEntities = new ArrayList<>();
+        for (String equipment_id: fieldDTO.getEquipmentsList()){
+            if (equipmentDao.existsById(equipment_id)){
+                equipmentEntities.add(equipmentDao.getReferenceById(equipment_id));
+            }
+        }
+        fieldEntity.setEquipmentsList(equipmentEntities);
         fieldEntity.setStaffList(staffEntities);
         fieldEntity.setCropList(cropEntities);
+
+        for (EquipmentEntity equipmentEntity: equipmentEntities){
+            equipmentEntity.getFieldList().add(fieldEntity);
+        }
+
         FieldEntity save = fieldDao.save(fieldEntity);
         if (save == null) {
             throw new DataPersistException("field not saved");
