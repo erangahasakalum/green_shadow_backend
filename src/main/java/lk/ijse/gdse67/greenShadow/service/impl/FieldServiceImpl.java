@@ -29,8 +29,6 @@ public class FieldServiceImpl implements FieldService {
     private StaffDao staffDao;
     @Autowired
     private CropDao cropDao;
-    @Autowired
-    private EquipmentDao equipmentDao;
 
     @Autowired
     private Mapping fieldMapping;

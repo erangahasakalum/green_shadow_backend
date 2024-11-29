@@ -1,6 +1,7 @@
 package lk.ijse.gdse67.greenShadow.service.impl;
 
 import lk.ijse.gdse67.greenShadow.dao.CropDao;
+import lk.ijse.gdse67.greenShadow.dao.FieldDao;
 import lk.ijse.gdse67.greenShadow.dto.impl.CropDTO;
 import lk.ijse.gdse67.greenShadow.entity.impl.CropEntity;
 import lk.ijse.gdse67.greenShadow.entity.impl.FieldEntity;
@@ -25,6 +26,9 @@ public class CropServiceImpl implements CropService {
     @Autowired
     private Mapping cropMapping;
 
+    @Autowired
+    private FieldDao fieldDao;
+
 
     @Override
     public void saveCrops(CropDTO cropDTO) {
@@ -39,9 +43,21 @@ public class CropServiceImpl implements CropService {
             }
         }
         cropDTO.setCropCode("CROP-" + ++id);
-        System.out.println(cropDTO);
-        CropEntity saved = cropDao.save(cropMapping.toCropEntity(cropDTO));
-        System.out.println(saved);
+
+        CropEntity cropEntity = cropMapping.toCropEntity(cropDTO);
+
+        List<FieldEntity> fieldEntities = new ArrayList<>();
+        for (String field_id : cropDTO.getFieldCodeList()){
+            if (fieldDao.existsById(field_id)){
+                fieldEntities.add(fieldDao.getReferenceById(field_id));
+            }
+        }
+        cropEntity.setFieldList(fieldEntities);
+
+        for (FieldEntity fieldEntity : fieldEntities){
+            fieldEntity.getCropList().add(cropEntity);
+        }
+        CropEntity saved = cropDao.save(cropEntity);
         if (saved == null) {
             throw new DataPersistException("crop not saved");
         }
