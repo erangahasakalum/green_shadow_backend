@@ -13,6 +13,7 @@ import lk.ijse.gdse67.greenShadow.utill.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -79,6 +80,17 @@ public class VehicleServiceImpl implements VehicleService {
 
     @Override
     public List<VehicleDTO> getAllVehicles() {
-        return vehicleMapping.toVehicleDtoList(vehicleDao.findAll());
+        List<VehicleDTO> vehicleDTOS = new ArrayList<>();
+        List<VehicleEntity> vehicle = vehicleDao.findAll();
+        for (VehicleEntity vehicleEntity:vehicle){
+            VehicleDTO vehicleDTO = vehicleMapping.toVehicleDTO(vehicleEntity);
+            System.out.println("memberCOde :  " + vehicleDTO.getMemberCode());
+            if(vehicleEntity.getStaff()!=null){
+                String memberCode = vehicleEntity.getStaff().getMemberCode();
+                vehicleDTO.setMemberCode(memberCode);
+            }
+            vehicleDTOS.add(vehicleDTO);
+        }
+        return vehicleDTOS;
     }
 }
