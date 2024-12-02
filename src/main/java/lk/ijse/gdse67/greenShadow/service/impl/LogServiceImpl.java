@@ -77,7 +77,6 @@ public class LogServiceImpl implements LogService {
         logEntity.setStaffList(staffEntities);
         logEntity.setCropList(cropEntities);
         logEntity.setFieldList(fieldEntities);
-
         LogEntity save = logDao.save(logEntity);
         if (save == null){
             throw new DataPersistException("log not saved");

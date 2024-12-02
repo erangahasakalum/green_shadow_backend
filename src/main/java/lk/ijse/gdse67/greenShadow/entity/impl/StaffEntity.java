@@ -3,16 +3,15 @@ import jakarta.persistence.*;
 import lk.ijse.gdse67.greenShadow.entity.Gender;
 import lk.ijse.gdse67.greenShadow.entity.Role;
 import lk.ijse.gdse67.greenShadow.entity.SuperEntity;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "staff")
 public class StaffEntity implements SuperEntity {

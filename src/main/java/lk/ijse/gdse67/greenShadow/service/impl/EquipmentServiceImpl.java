@@ -82,6 +82,27 @@ public class EquipmentServiceImpl implements EquipmentService {
 
     @Override
     public List<EquipmentDTO> getAllEquipment() {
-        return equipmentMapping.toEquipmenttoList(equipmentDao.findAll());
+        List<EquipmentDTO> list = new ArrayList<>();
+
+        for (EquipmentEntity equipmentEntity : equipmentDao.findAll()){
+            List<String> staffList = new ArrayList<>();
+            List<String> fieldList = new ArrayList<>();
+
+            for (StaffEntity staff : equipmentEntity.getStaffCodeList()){
+                staffList.add(staff.getMemberCode());
+            }
+            for (FieldEntity field : equipmentEntity.getFieldList()){
+                fieldList.add(field.getFieldCode());
+            }
+            list.add(new EquipmentDTO(equipmentEntity.getEquipmentCode(),
+                    equipmentEntity.getName(),
+                    equipmentEntity.getType(),
+                    equipmentEntity.getStatus(),
+                    equipmentEntity.getAvailableCount(),
+                    staffList,
+                    fieldList)
+            );
+        }
+        return list;
     }
 }

@@ -41,7 +41,7 @@ public class LogController {
             List<String> fieldCode = new ArrayList<>();
 
             if (staffList != null){
-                staffCodes = SplitString.spiltLists(fieldList);
+                staffCodes = SplitString.spiltLists(staffList);
             }
 
             if (cropList != null){
@@ -57,7 +57,6 @@ public class LogController {
             logDTO.setStaffList(staffCodes);
             logDTO.setCropList(cropCodes);
             logDTO.setFieldList(fieldCode);
-            System.out.println(logDTO);
             logService.saveLogs(logDTO);
             return new ResponseEntity<>(HttpStatus.CREATED);
         }catch (DataPersistException e){

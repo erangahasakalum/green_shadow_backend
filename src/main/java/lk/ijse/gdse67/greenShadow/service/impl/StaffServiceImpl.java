@@ -73,6 +73,7 @@ public class StaffServiceImpl implements StaffService {
         }
 
 
+
         staffEntity.setEquipmentList(equipmentEntities);
         staffEntity.setFieldList(fieldEntities);
         staffEntity.setVehicleList(vehicleEntities);
