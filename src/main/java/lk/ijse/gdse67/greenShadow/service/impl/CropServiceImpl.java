@@ -6,10 +6,7 @@ import lk.ijse.gdse67.greenShadow.dto.impl.CropDTO;
 import lk.ijse.gdse67.greenShadow.dto.impl.FieldDTO;
 import lk.ijse.gdse67.greenShadow.dto.impl.LogDTO;
 import lk.ijse.gdse67.greenShadow.dto.impl.VehicleDTO;
-import lk.ijse.gdse67.greenShadow.entity.impl.CropEntity;
-import lk.ijse.gdse67.greenShadow.entity.impl.FieldEntity;
-import lk.ijse.gdse67.greenShadow.entity.impl.LogEntity;
-import lk.ijse.gdse67.greenShadow.entity.impl.VehicleEntity;
+import lk.ijse.gdse67.greenShadow.entity.impl.*;
 import lk.ijse.gdse67.greenShadow.exeption.DataPersistException;
 import lk.ijse.gdse67.greenShadow.service.CropService;
 import lk.ijse.gdse67.greenShadow.utill.Mapping;
@@ -70,20 +67,24 @@ public class CropServiceImpl implements CropService {
 
     @Override
     public List<CropDTO> getAllCrops() {
-        List<CropDTO> list =  new ArrayList<>();
-        List<CropEntity> all = cropDao.findAll();
-        for (CropEntity cropEntity : all){
-            List<String> fieldCodes = new ArrayList<>();
-            List<String> logCodes = new ArrayList<>();
-            for (FieldEntity field : cropEntity.getFieldList()){
-                fieldCodes.add(field.getFieldCode());
+        List<CropDTO> cropDto = new ArrayList<>();
+
+        for (CropEntity crop : cropDao.findAll()) {
+
+            List<String> fieldList = new ArrayList<>();
+            List<String> logList = new ArrayList<>();
+
+            for (LogEntity logEntity : crop.getLogList()) {
+                logList.add(logEntity.getLogCode());
             }
-            for (LogEntity logEntity : cropEntity.getLogList()){
-                logCodes.add(logEntity.getLogCode());
+            for (FieldEntity fieldEntity : crop.getFieldList()) {
+                fieldList.add(fieldEntity.getFieldCode());
             }
-            list.add(new CropDTO(cropEntity.getCropCode(),cropEntity.getCropName(),cropEntity.getScientificName(),cropEntity.getCropImage(),cropEntity.getCategory(),cropEntity.getSeason(),fieldCodes,logCodes));
+
+            cropDto.add(new CropDTO(crop.getCropCode(), crop.getCropName(), crop.getScientificName(), crop.getCategory(), crop.getCropImage(),
+                    crop.getSeason(), fieldList,logList));
         }
-        return list;
+        return cropDto;
     }
 
     @Override
@@ -98,6 +99,45 @@ public class CropServiceImpl implements CropService {
 
     @Override
     public void updateCrop(CropDTO cropDTO, String id) {
+        /*public void updateCrop(CropDTO cropDTO) {
+            CropEntity cropEntity = mapping.toCropEntity(cropDTO);
+            if (cropDAO.existsById(cropDTO.getCrop_code())){
+                Optional<CropEntity> byId = cropDAO.findById(cropDTO.getCrop_code());
+
+                if (byId.isPresent()){
+
+
+                    byId.get().setCrop_common_name(cropEntity.getCrop_common_name());
+                    byId.get().setCrop_scientific_name(cropEntity.getCrop_scientific_name());
+                    byId.get().setCrop_image(cropEntity.getCrop_image());
+                    byId.get().setCategory(cropEntity.getCategory());
+                    byId.get().setSeason(cropEntity.getSeason());
+
+                    List<FieldEntity> fieldList = byId.get().getField_list();
+
+                    CropEntity referenceById = cropDAO.getReferenceById(cropEntity.getCrop_code());
+
+                    for (FieldEntity field : fieldList){
+                        field.getCrop_list().remove(referenceById);
+                    }
+                    byId.get().getField_list().clear();
+
+
+                    List<FieldEntity> fieldEntities = new ArrayList<>();
+
+                    for (String id : cropDTO.getField_code_list()){
+                        if (fieldDAO.existsById(id)){
+                            fieldEntities.add(fieldDAO.getReferenceById(id));
+                        }
+                    }
+
+                    byId.get().getField_list().addAll(fieldEntities);
+                }
+            }else {
+                throw new DataNotFoundException("Cant find Data to Update!");
+            }
+
+        }*/
 
     }
 }

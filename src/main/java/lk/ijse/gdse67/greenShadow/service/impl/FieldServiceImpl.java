@@ -86,18 +86,64 @@ public class FieldServiceImpl implements FieldService {
 
     @Override
     public void updateField(FieldDTO fieldDTO, String id) {
+     /*   FieldEntity fieldEntity = fieldMapping.toFieldEntity(fieldDTO);
+        if (fieldDao.existsById(fieldDTO.getFieldCode())) {
+            Optional<FieldEntity> byId = fieldDao.findById(fieldDTO.getFieldCode());
 
+            if (byId.isPresent()) {
+                byId.get().setName(fieldEntity.getName());
+                byId.get().setLocation(fieldEntity.getLocation());
+                byId.get().setExtentSize(fieldEntity.getExtentSize());
+                byId.get().setFieldImage1(fieldEntity.getFieldImage1());
+                byId.get().setFieldImage2(fieldEntity.getFieldImage2());
+                byId.get().setFieldImage2(fieldEntity.getFieldImage2());
+
+                List<FieldEntity> fieldList = byId.get().getField_list();
+
+                CropEntity referenceById = cropDAO.getReferenceById(cropEntity.getCrop_code());
+
+                for (FieldEntity field : fieldList) {
+                    field.getCrop_list().remove(referenceById);
+                }
+                byId.get().getField_list().clear();
+
+
+                List<FieldEntity> fieldEntities = new ArrayList<>();
+
+                for (String id : cropDTO.getField_code_list()) {
+                    if (fieldDAO.existsById(id)) {
+                        fieldEntities.add(fieldDAO.getReferenceById(id));
+                    }
+                }
+
+                byId.get().getField_list().addAll(fieldEntities);
+            }
+        } else {
+            throw new DataPersistException("Cant find Data to Update!");
+        }*/
     }
+
 
     @Override
     public void deleteField(String id) {
-        Optional<FieldEntity> referenceById = fieldDao.findById(id);
-        if (referenceById.isPresent()) {
-            fieldDao.delete(referenceById.get());
+        /*if (fieldDao.existsById(id)) {
+            FieldEntity referenceById = fieldDao.getReferenceById(id);
+            List<FieldEntity> fieldList = referenceById.getField_list();
+            for (FieldEntity field : fieldList) {
+                List<CropEntity> cropList = field.getCrop_list();
+                cropList.remove(referenceById);
+            }
+
+            referenceById.getField_list().clear();
+
+            cropDAO.delete(referenceById);
+
+
         } else {
-            throw new DataPersistException("field not deleted");
-        }
+            throw new DataNotFoundException("Cant find data to delete!");
+        }*/
     }
+
 
     @Override
     public List<FieldDTO> getAllField() {
