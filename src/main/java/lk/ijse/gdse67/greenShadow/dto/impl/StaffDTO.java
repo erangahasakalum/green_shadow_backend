@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
+
+import java.time.LocalDate;
 import java.util.List;
 
 @AllArgsConstructor
@@ -16,8 +18,8 @@ public class StaffDTO implements SuperDTO {
     private String memberCode;
     private String firstName;
     private String lastName;
-    private String joinedDate;
-    private String dateOfBirth;
+    private LocalDate joinedDate;
+    private LocalDate dateOfBirth;
     private Gender gender;
     private String designation;
     private String addressLine1;

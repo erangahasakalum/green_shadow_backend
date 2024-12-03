@@ -10,6 +10,8 @@ import lk.ijse.gdse67.greenShadow.utill.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,40 +41,38 @@ public class StaffServiceImpl implements StaffService {
     public void saveStaff(StaffDTO staffDTO) {
         int id = 0;
         StaffEntity lastRowNative = staffDao.findLastRowNative();
-        if (lastRowNative != null){
+        if (lastRowNative != null) {
             try {
                 String[] parts = lastRowNative.getMemberCode().split("-");
                 id = Integer.parseInt(parts[1]);
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-        staffDTO.setMemberCode("MEMBER-"+ ++id);
+        staffDTO.setMemberCode("MEMBER-" + ++id);
 
         StaffEntity staffEntity = staffMapping.toStaffEntity(staffDTO);
 
         List<VehicleEntity> vehicleEntities = new ArrayList<>();
-        for (String vehicle_id:staffDTO.getVehicleList()){
-            if(vehicleDao.existsById(vehicle_id)){
+        for (String vehicle_id : staffDTO.getVehicleList()) {
+            if (vehicleDao.existsById(vehicle_id)) {
                 vehicleEntities.add(vehicleDao.getById(vehicle_id));
             }
         }
 
         List<FieldEntity> fieldEntities = new ArrayList<>();
-        for (String field_id :staffDTO.getFieldCodeList()){
-            if(fieldDao.existsById(field_id)){
+        for (String field_id : staffDTO.getFieldCodeList()) {
+            if (fieldDao.existsById(field_id)) {
                 fieldEntities.add(fieldDao.getById(field_id));
             }
         }
 
         List<EquipmentEntity> equipmentEntities = new ArrayList<>();
-        for (String equipment_id :staffDTO.getEquipmentList()){
-            if(equipmentDao.existsById(equipment_id)){
+        for (String equipment_id : staffDTO.getEquipmentList()) {
+            if (equipmentDao.existsById(equipment_id)) {
                 equipmentEntities.add(equipmentDao.getById(equipment_id));
             }
         }
-
-
 
         staffEntity.setEquipmentList(equipmentEntities);
         staffEntity.setFieldList(fieldEntities);
@@ -85,7 +85,49 @@ public class StaffServiceImpl implements StaffService {
 
     @Override
     public List<StaffDTO> getAllStaff() {
-        return staffMapping.toStaffDtoList(staffDao.findAll());
+        List<StaffDTO> staffDTOS = new ArrayList<>();
+
+        for (StaffEntity staffEntity : staffDao.findAll()) {
+            List<String> vehicleList = new ArrayList<>();
+            List<String> fieldList = new ArrayList<>();
+            List<String> equipmentList = new ArrayList<>();
+            List<String> logList = new ArrayList<>();
+
+            for (VehicleEntity vehicleEntity : vehicleDao.findAll()) {
+                vehicleList.add(vehicleEntity.getVehicleCode());
+            }
+            for (FieldEntity fieldEntity : fieldDao.findAll()) {
+                fieldList.add(fieldEntity.getFieldCode());
+            }
+            for (EquipmentEntity equipmentEntity : equipmentDao.findAll()) {
+                equipmentList.add(equipmentEntity.getEquipmentCode());
+            }
+            for (LogEntity logEntity : logDao.findAll()) {
+                logList.add(logEntity.getLogCode());
+            }
+
+
+            staffDTOS.add(new StaffDTO(staffEntity.getMemberCode(),
+                    staffEntity.getFirstName(),
+                    staffEntity.getLastName(),
+                    staffEntity.getJoinedDate(),
+                    staffEntity.getDateOfBirth(),
+                    staffEntity.getGender(),
+                    staffEntity.getDesignation(),
+                    staffEntity.getAddressLine1(),
+                    staffEntity.getAddressLine2(),
+                    staffEntity.getAddressLine3(),
+                    staffEntity.getAddressLine4(),
+                    staffEntity.getAddressLine5(),
+                    staffEntity.getContactNo(),
+                    staffEntity.getEmail(),
+                    staffEntity.getRole(),
+                    vehicleList,
+                    fieldList,
+                    equipmentList,
+                    logList));
+        }
+        return staffDTOS;
     }
 
     @Override
