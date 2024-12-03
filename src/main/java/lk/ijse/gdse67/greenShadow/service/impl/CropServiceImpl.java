@@ -3,9 +3,6 @@ package lk.ijse.gdse67.greenShadow.service.impl;
 import lk.ijse.gdse67.greenShadow.dao.CropDao;
 import lk.ijse.gdse67.greenShadow.dao.FieldDao;
 import lk.ijse.gdse67.greenShadow.dto.impl.CropDTO;
-import lk.ijse.gdse67.greenShadow.dto.impl.FieldDTO;
-import lk.ijse.gdse67.greenShadow.dto.impl.LogDTO;
-import lk.ijse.gdse67.greenShadow.dto.impl.VehicleDTO;
 import lk.ijse.gdse67.greenShadow.entity.impl.*;
 import lk.ijse.gdse67.greenShadow.exeption.DataPersistException;
 import lk.ijse.gdse67.greenShadow.service.CropService;
@@ -16,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+
 
 @Service
 @Transactional
@@ -108,6 +105,7 @@ public class CropServiceImpl implements CropService {
             }
 
             referenceById.getFieldList().clear();
+            referenceById.getLogList().clear();
 
             cropDao.delete(referenceById);
 

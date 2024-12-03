@@ -1,6 +1,7 @@
 package lk.ijse.gdse67.greenShadow.controller;
 import lk.ijse.gdse67.greenShadow.dto.impl.EquipmentDTO;
 import lk.ijse.gdse67.greenShadow.exeption.DataPersistException;
+import lk.ijse.gdse67.greenShadow.exeption.NotFoundException;
 import lk.ijse.gdse67.greenShadow.service.EquipmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,9 +37,17 @@ public class EquipmentController {
         return equipmentService.getAllEquipment();
     }
 
-    @DeleteMapping
-    public ResponseEntity<Void> deleteEquipment(){
-        return null;
+    @DeleteMapping(value = "/{equipmentId}")
+    public ResponseEntity<Void> deleteEquipment(@PathVariable  ("equipmentId")String id){
+        try {
+            equipmentService.deleteEquipment(id);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }catch (NotFoundException e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }catch (DataPersistException e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
     }
 
     @PatchMapping

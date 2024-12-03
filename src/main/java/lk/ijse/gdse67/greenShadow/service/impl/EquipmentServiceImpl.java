@@ -3,10 +3,7 @@ import lk.ijse.gdse67.greenShadow.dao.EquipmentDao;
 import lk.ijse.gdse67.greenShadow.dao.FieldDao;
 import lk.ijse.gdse67.greenShadow.dao.StaffDao;
 import lk.ijse.gdse67.greenShadow.dto.impl.EquipmentDTO;
-import lk.ijse.gdse67.greenShadow.entity.impl.EquipmentEntity;
-import lk.ijse.gdse67.greenShadow.entity.impl.FieldEntity;
-import lk.ijse.gdse67.greenShadow.entity.impl.StaffEntity;
-import lk.ijse.gdse67.greenShadow.entity.impl.VehicleEntity;
+import lk.ijse.gdse67.greenShadow.entity.impl.*;
 import lk.ijse.gdse67.greenShadow.exeption.DataPersistException;
 import lk.ijse.gdse67.greenShadow.service.EquipmentService;
 import lk.ijse.gdse67.greenShadow.utill.Mapping;
@@ -77,7 +74,24 @@ public class EquipmentServiceImpl implements EquipmentService {
 
     @Override
     public void deleteEquipment(String id) {
+        if (equipmentDao.existsById(id)){
+            EquipmentEntity referenceById = equipmentDao.getReferenceById(id);
+            List<FieldEntity> fieldList = referenceById.getFieldList();
+            List<StaffEntity> staffCodeList = referenceById.getStaffCodeList();
 
+            for (FieldEntity fieldEntity : fieldList){
+                List<CropEntity> cropList = fieldEntity.getCropList();
+                cropList.remove(referenceById);
+            }
+            for (StaffEntity staffEntity : staffCodeList){
+                List<EquipmentEntity> equipmentList = staffEntity.getEquipmentList();
+                equipmentList.remove(referenceById);
+            }
+            referenceById.getFieldList().clear();
+            referenceById.getStaffCodeList().clear();
+
+            equipmentDao.delete(referenceById);
+        }
     }
 
     @Override
