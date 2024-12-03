@@ -36,11 +36,11 @@ public class CropServiceImpl implements CropService {
     public void saveCrops(CropDTO cropDTO) {
         int id = 0;
         CropEntity lastRowNative = cropDao.findLastRowNative();
-        if (lastRowNative != null){
+        if (lastRowNative != null) {
             try {
                 String[] parts = lastRowNative.getCropCode().split("-");
                 id = Integer.parseInt(parts[1]);
-            }catch (Exception e){
+            } catch (Exception e) {
                 throw new DataPersistException(e.getMessage());
             }
         }
@@ -49,14 +49,14 @@ public class CropServiceImpl implements CropService {
         CropEntity cropEntity = cropMapping.toCropEntity(cropDTO);
 
         List<FieldEntity> fieldEntities = new ArrayList<>();
-        for (String field_id : cropDTO.getFieldCodeList()){
-            if (fieldDao.existsById(field_id)){
+        for (String field_id : cropDTO.getFieldCodeList()) {
+            if (fieldDao.existsById(field_id)) {
                 fieldEntities.add(fieldDao.getReferenceById(field_id));
             }
         }
         cropEntity.setFieldList(fieldEntities);
 
-        for (FieldEntity fieldEntity : fieldEntities){
+        for (FieldEntity fieldEntity : fieldEntities) {
             fieldEntity.getCropList().add(cropEntity);
         }
         CropEntity saved = cropDao.save(cropEntity);
@@ -81,8 +81,13 @@ public class CropServiceImpl implements CropService {
                 fieldList.add(fieldEntity.getFieldCode());
             }
 
-            cropDto.add(new CropDTO(crop.getCropCode(), crop.getCropName(), crop.getScientificName(), crop.getCategory(), crop.getCropImage(),
-                    crop.getSeason(), fieldList,logList));
+            cropDto.add(new CropDTO(crop.getCropCode(),
+                    crop.getCropName(),
+                    crop.getScientificName(),
+                    crop.getCategory(),
+                    crop.getCropImage(),
+                    crop.getSeason(),
+                    fieldList, logList));
         }
         return cropDto;
     }
