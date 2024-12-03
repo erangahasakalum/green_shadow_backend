@@ -94,11 +94,26 @@ public class CropServiceImpl implements CropService {
 
     @Override
     public void deleteCrop(String id) {
-        Optional<CropEntity> referenceById = cropDao.findById(id);
-        if (referenceById.isPresent()) {
-            cropDao.deleteById(id);
-        } else {
-            throw new DataPersistException("crop not deleted");
+        if (cropDao.existsById(id)){
+            CropEntity referenceById = cropDao.getReferenceById(id);
+            List<FieldEntity> fieldList = referenceById.getFieldList();
+            List<LogEntity> logList = referenceById.getLogList();
+            for (FieldEntity field : fieldList){
+                List<CropEntity> cropList = field.getCropList();
+                cropList.remove(referenceById);
+            }
+            for (LogEntity logEntity : logList){
+                List<CropEntity> cropList = logEntity.getCropList();
+                cropList.remove(referenceById);
+            }
+
+            referenceById.getFieldList().clear();
+
+            cropDao.delete(referenceById);
+
+
+        }else {
+            throw new DataPersistException("Cant find data to delete!");
         }
     }
 
