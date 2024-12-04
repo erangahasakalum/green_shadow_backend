@@ -126,7 +126,7 @@ public class FieldServiceImpl implements FieldService {
 
     @Override
     public void deleteField(String id) {
-        /*if (fieldDao.existsById(id)) {
+     /*   if (fieldDao.existsById(id)) {
             FieldEntity referenceById = fieldDao.getReferenceById(id);
             List<FieldEntity> fieldList = referenceById.getField_list();
             for (FieldEntity field : fieldList) {
