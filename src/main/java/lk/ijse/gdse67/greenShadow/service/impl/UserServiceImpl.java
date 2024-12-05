@@ -1,59 +1,33 @@
-//package lk.ijse.gdse67.greenShadow.service.impl;
-//import jakarta.transaction.Transactional;
-//import lk.ijse.gdse67.greenShadow.dto.impl.UserDTO;
-//import lk.ijse.gdse67.greenShadow.entity.impl.UserEntity;
-//import lk.ijse.gdse67.greenShadow.exeption.DataPersistException;
-//import lk.ijse.gdse67.greenShadow.exeption.NotFoundException;
-//import lk.ijse.gdse67.greenShadow.service.UserService;
-//import lk.ijse.gdse67.greenShadow.utill.Mapping;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.stereotype.Service;
-//
-//import java.util.List;
-//import java.util.Optional;
-//
-//@Service
-//@Transactional
-//public class UserServiceImpl implements UserService {
-//    @Autowired
-//    private UserDao userDao;
-//
-//    @Autowired
-//    private Mapping userMapping;
+package lk.ijse.gdse67.greenShadow.service.impl;
+
+import lk.ijse.gdse67.greenShadow.dao.UserDAO;
+import lk.ijse.gdse67.greenShadow.service.UserService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
+
+@Service
+@RequiredArgsConstructor
+public class UserServiceImpl implements UserService {
+    private final UserDAO userDAO;
+    // private final EmailService emailService;
+
+    @Override
+    public UserDetailsService userDetailsService() {
+        return username ->
+                userDAO.findByEmail(username).
+                        orElseThrow(()->new UsernameNotFoundException("User Not Found"));
+
+    }
+
 //    @Override
-//    public void saveUser(UserDTO userDTO) {
-//        UserEntity save = userDao.save(userMapping.toUserEntity(userDTO));
-//        if (save == null) {
-//            throw new DataPersistException("user not saved");
+//    public boolean sendCodeToChangePassword(UserWithKey userWithKey) {
+//        Optional<UserEntity> byEmail = userDAO.findByEmail(userWithKey.getEmail());
+//        if (byEmail.isPresent()){
+//          //  emailService.sendEmail(userWithKey.getEmail(),"Your password change Code From Green Shadow(PVT) Ltd.","Dont share with anyone:  "+userWithKey.getCode());
+//            return true;
 //        }
+//        return false;
 //    }
-//
-//    @Override
-//    public void deleteUser(String id) {
-//        Optional<UserEntity> exitUser = userDao.findById(id);
-//        if (exitUser.isPresent()) {
-//            userDao.delete(exitUser.get());
-//        }else {
-//            throw new DataPersistException("user not found");
-//        }
-//    }
-//
-//    @Override
-//    public void updateUser(String id, UserDTO userDTO) {
-//        if (userDao.existsById(id)){
-//            Optional<UserEntity> referenceById = userDao.findById(id);
-//            referenceById.get().setEmail(userDTO.getEmail());
-//            referenceById.get().setPassword(userDTO.getPassword());
-//            referenceById.get().setRole(userDTO.getRole());
-//        }else {
-//            throw new NotFoundException("This Id Not in database!!!");
-//        }
-//
-//    }
-//
-//    @Override
-//    public List<UserDTO> getAllUsers() {
-//        return userMapping.toUserDtoList(userDao.findAll());
-//    }
-//
-//}
+}

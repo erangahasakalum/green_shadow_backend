@@ -15,19 +15,18 @@ public class Mapping {
     @Autowired
     private ModelMapper modelMapper;
 
-/*    //for user mapping
-    public UserEntity toUserEntity(UserDTO userDTO) {
-        return modelMapper.map(userDTO, UserEntity.class);
+
+    public UserEntity toUserEntity(UserDTO userDTO){
+        return modelMapper.map(userDTO,UserEntity.class);
     }
 
-    public UserDTO toUserDTO(UserEntity userEntity) {
-        return modelMapper.map(userEntity, UserDTO.class);
+    public UserDTO toUserDTO(UserEntity userentity){
+        return modelMapper.map(userentity,UserDTO.class);
     }
 
-    public List<UserDTO> toUserDtoList(List<UserEntity> list) {
-        return modelMapper.map(list, new TypeToken<List<UserDTO>>() {
-        }.getType());
-    }*/
+    public List<UserDTO> userList(List<UserEntity> userList){
+        return modelMapper.map(userList,new TypeToken<List<UserDTO>>(){}.getType());
+    }
 
     //for vehicle mapping
     public VehicleEntity toVehicleEntity(VehicleDTO vehicleDTO) {

@@ -137,6 +137,42 @@ public class StaffServiceImpl implements StaffService {
 
     @Override
     public void deleteStaff(String id) {
+        if (staffDao.existsById(id)){
+            StaffEntity referenceById = staffDao.getReferenceById(id);
+            List<VehicleEntity> vehicleList = referenceById.getVehicleList();
+            List<FieldEntity> fieldList = referenceById.getFieldList();
+            List<LogEntity> logList = referenceById.getLogList();
+            List<EquipmentEntity> equipmentList = referenceById.getEquipmentList();
+//
+//            for (VehicleEntity vehicleEntity : vehicleList) {
+//                StaffEntity staff = vehicleEntity.getStaff();
+//
+//            }
+
+            for (FieldEntity fieldEntity : fieldList) {
+                List<StaffEntity> staffList = fieldEntity.getStaffList();
+                staffList.remove(referenceById);
+            }
+
+            for (LogEntity logEntity : logList) {
+                List<StaffEntity> staffList = logEntity.getStaffList();
+                staffList.remove(referenceById);
+            }
+
+            for (EquipmentEntity equipmentEntity : equipmentList) {
+                List<StaffEntity> staffCodeList = equipmentEntity.getStaffCodeList();
+                staffCodeList.remove(referenceById);
+            }
+
+            referenceById.getVehicleList().clear();
+            referenceById.getFieldList().clear();
+            referenceById.getLogList().clear();
+            referenceById.getEquipmentList().clear();
+
+            staffDao.delete(referenceById);
+        }else {
+            throw new DataPersistException("Cant find data to delete");
+        }
 
     }
 }

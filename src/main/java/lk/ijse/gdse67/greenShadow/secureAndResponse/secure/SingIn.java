@@ -1,4 +1,4 @@
-package lk.ijse.gdse67.greenShadow.secure;
+package lk.ijse.gdse67.greenShadow.secureAndResponse.secure;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
@@ -14,15 +14,12 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 @Builder
 @CrossOrigin
 
-public class SignUp {
-    @NotNull
-    private String user_id;
-    @NotNull(message = "Email Can`t be Null ")
+
+public class SingIn {
+    @NotNull(message = "Email Can`t be Null")
     @Email
     private String email;
-    @NotNull
-    private String password;
-    @NotNull
-    private String role;
 
+    @NotNull(message = "Password Can`t be Null ")
+    private String password;
 }
