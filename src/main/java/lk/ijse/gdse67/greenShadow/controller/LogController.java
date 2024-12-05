@@ -1,6 +1,7 @@
 package lk.ijse.gdse67.greenShadow.controller;
 import lk.ijse.gdse67.greenShadow.dto.impl.LogDTO;
 import lk.ijse.gdse67.greenShadow.exeption.DataPersistException;
+import lk.ijse.gdse67.greenShadow.exeption.NotFoundException;
 import lk.ijse.gdse67.greenShadow.service.LogService;
 import lk.ijse.gdse67.greenShadow.utill.AppUtil;
 import lk.ijse.gdse67.greenShadow.utill.SplitString;
@@ -71,6 +72,18 @@ public class LogController {
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<LogDTO> getAllLogs(){
         return logService.getAllLogs();
+    }
+
+    @DeleteMapping(value = "/{logCode}")
+    public ResponseEntity<Void> deleteLog(@PathVariable ("logCode") String logCode){
+        try {
+            logService.deleteLogs(logCode);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }catch (NotFoundException e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 

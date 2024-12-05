@@ -90,7 +90,35 @@ public class LogServiceImpl implements LogService {
 
     @Override
     public void deleteLogs(String id) {
+        if (logDao.existsById(id)){
+            LogEntity referenceById = logDao.getReferenceById(id);
+            List<FieldEntity> fieldList = referenceById.getFieldList();
+            List<StaffEntity> staffList = referenceById.getStaffList();
+            List<CropEntity> cropList = referenceById.getCropList();
 
+            for (FieldEntity fieldEntity : fieldList){
+                List<LogEntity> logList = fieldEntity.getLogList();
+                logList.remove(referenceById);
+            }
+
+            for (CropEntity cropEntity : cropList){
+                List<LogEntity> logList = cropEntity.getLogList();
+                logList.remove(referenceById);
+            }
+
+            for (StaffEntity staffEntity : staffList){
+                List<LogEntity> logList = staffEntity.getLogList();
+                logList.remove(referenceById);
+            }
+
+            referenceById.getStaffList().clear();
+            referenceById.getCropList().clear();
+            referenceById.getFieldList().clear();
+
+            logDao.delete(referenceById);
+        }else {
+            throw new DataPersistException("Cant find data to delete!");
+        }
     }
 
     @Override
