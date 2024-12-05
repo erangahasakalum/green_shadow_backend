@@ -1,13 +1,13 @@
-//package lk.ijse.gdse67.greenShadow.secureAndResponse.response;
+//package lk.ijse.demo.dto.impl;
+//
 //import lombok.AllArgsConstructor;
-//import lombok.Builder;
 //import lombok.Data;
 //import lombok.NoArgsConstructor;
 //
 //@Data
-//@Builder
 //@AllArgsConstructor
 //@NoArgsConstructor
-//public class JwtAuthResponse {
+//public class Token {
 //    private String token;
+//
 //}

@@ -126,22 +126,33 @@ public class FieldServiceImpl implements FieldService {
 
     @Override
     public void deleteField(String id) {
-     /*   if (fieldDao.existsById(id)) {
+        if (fieldDao.existsById(id)) {
             FieldEntity referenceById = fieldDao.getReferenceById(id);
-            List<FieldEntity> fieldList = referenceById.getField_list();
-            for (FieldEntity field : fieldList) {
-                List<CropEntity> cropList = field.getCrop_list();
-                cropList.remove(referenceById);
+            List<EquipmentEntity> equipmentsList = referenceById.getEquipmentsList();
+            List<StaffEntity> staffList = referenceById.getStaffList();
+            List<LogEntity> logList = referenceById.getLogList();
+
+            for (EquipmentEntity equipmentEntity : equipmentsList) {
+                List<FieldEntity> fieldList = equipmentEntity.getFieldList();
+                fieldList.remove(referenceById);
             }
 
-            referenceById.getField_list().clear();
+            for (StaffEntity staffEntity : staffList) {
+                List<FieldEntity> fieldList = staffEntity.getFieldList();
+                fieldList.remove(referenceById);
+            }
+            for (LogEntity logEntity : logList) {
+                List<FieldEntity> fieldList = logEntity.getFieldList();
+                fieldList.remove(referenceById);
 
-            cropDAO.delete(referenceById);
-
-
-        } else {
-            throw new DataNotFoundException("Cant find data to delete!");
-        }*/
+            }
+            referenceById.getEquipmentsList().clear();
+            referenceById.getStaffList().clear();
+            referenceById.getLogList().clear();
+            fieldDao.delete(referenceById);
+        }else {
+            throw new DataPersistException("Cant find data to delete!");
+        }
     }
 
 
